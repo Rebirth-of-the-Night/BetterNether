@@ -79,6 +79,7 @@ public class NetherMushroomForest extends NetherBiome
 			BNWorldGenerator.lucisGen.generate(world, pos, random);
 	}
 
+    @SuppressWarnings("unused")
 	private void growRedMushroom(Chunk chunk, BlockPos pos, Random random)
 	{
 		int size = 2 + random.nextInt(3);

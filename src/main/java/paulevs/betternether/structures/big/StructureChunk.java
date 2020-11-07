@@ -32,7 +32,8 @@ public class StructureChunk
 		arrayID[index] = blockID;
 		arrayMeta[index] = blockMeta;
 	}
-	
+    
+    @SuppressWarnings("deprecation")
 	public IBlockState getBlockState(int x, int y, int z)
 	{
 		int index = getIndex(x, y, z);

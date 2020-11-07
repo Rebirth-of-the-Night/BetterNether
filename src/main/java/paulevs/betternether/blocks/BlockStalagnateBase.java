@@ -80,7 +80,6 @@ public class BlockStalagnateBase extends Block
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
         IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
-        Block block = iblockstate.getBlock();
 
         if (side == EnumFacing.UP || side == EnumFacing.DOWN)
         	if (iblockstate == blockState)

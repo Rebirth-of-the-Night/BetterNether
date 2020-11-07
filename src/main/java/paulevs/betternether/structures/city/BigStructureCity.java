@@ -16,9 +16,9 @@ import paulevs.betternether.structures.big.BigStructure;
 
 public class BigStructureCity extends BigStructure
 {
-	private static final IBlockState AIR = Blocks.AIR.getDefaultState();
+	// private static final IBlockState AIR = Blocks.AIR.getDefaultState();
 	private static final IBlockState LAVA = Blocks.LAVA.getDefaultState();
-	private static final IBlockState NETHERRACK = Blocks.NETHERRACK.getDefaultState();
+	// private static final IBlockState NETHERRACK = Blocks.NETHERRACK.getDefaultState();
 	protected CityGenerator generator;
 	protected ArrayList<BuildingInfo> buildings;
 	

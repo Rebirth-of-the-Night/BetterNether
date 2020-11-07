@@ -10,9 +10,9 @@ import net.minecraft.item.Item;
 import paulevs.betternether.BetterNether;
 import paulevs.betternether.items.ItemsRegister;
 
-public class BlockCincinnasitOre extends BlockOre
+public class BlockCincinnasiteOre extends BlockOre
 {
-	public BlockCincinnasitOre()
+	public BlockCincinnasiteOre()
 	{
 		super(MapColor.GOLD);
 		this.setHardness(3.0F);

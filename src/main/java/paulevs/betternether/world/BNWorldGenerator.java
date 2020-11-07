@@ -267,7 +267,7 @@ public class BNWorldGenerator
 								}
 							}
 						}
-						if (BlocksRegister.BLOCK_CINCINNASITE_ORE != Blocks.AIR && random.nextInt(1024) == 0)
+						if (BlocksRegister.BLOCK_CINCINNASITE_ORE != Blocks.AIR && random.nextFloat() < oreDensity)
 							spawnOre(BlocksRegister.BLOCK_CINCINNASITE_ORE.getDefaultState(), world, popPos, random);
 					}
 				}
@@ -423,7 +423,7 @@ public class BNWorldGenerator
 	
 	private static BlockPos downRay(World world, BlockPos start)
 	{
-		int dist = 0;
+		// int dist = 0;
 		Block b;
 		BlockPos p;
 		for (int j = start.getY(); j > 31; j--)

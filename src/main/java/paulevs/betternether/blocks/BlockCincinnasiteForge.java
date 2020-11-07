@@ -100,7 +100,7 @@ public class BlockCincinnasiteForge extends BlockContainer
             double d0 = (double)pos.getX() + 0.5;
             double d1 = (double)pos.getY() + 0.25 + rand.nextDouble() * 0.1875;
             double d2 = (double)pos.getZ() + 0.5;
-            double d3 = 0.52D;
+            // double d3 = 0.52D;
             double d4 = rand.nextDouble() * 0.6 - 0.3;
 
             if (rand.nextDouble() < 0.1D)

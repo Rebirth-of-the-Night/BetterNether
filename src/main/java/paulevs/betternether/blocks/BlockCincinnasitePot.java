@@ -51,7 +51,7 @@ public class BlockCincinnasitePot extends BlockCincinnasite
 		facing == EnumFacing.UP && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
 		{
 			Block b = ((ItemBlock) player.getHeldItemMainhand().getItem()).getBlock();
-			if (BlocksRegister.BLOCK_POTTED_PLANT != null && ((BlockPottedPlant1) BlocksRegister.BLOCK_POTTED_PLANT).hasPlant(b))
+			if (BlocksRegister.BLOCK_POTTED_PLANT != null && BlockPottedPlant1.hasPlant(b))
 			{
 				IBlockState state2 = ((BlockPottedPlant1) BlocksRegister.BLOCK_POTTED_PLANT).getBlockState(b);
 				world.setBlockState(pos.up(), state2);

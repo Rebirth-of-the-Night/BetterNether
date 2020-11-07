@@ -132,6 +132,7 @@ public class BlockLucisSpore extends Block implements IGrowable
 		return world.getBlockState(pos).getBlock() instanceof BlockNetherrack;
 	}
 
+    @SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
 	{

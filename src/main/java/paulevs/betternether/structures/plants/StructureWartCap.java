@@ -24,7 +24,7 @@ public class StructureWartCap implements IStructure
 	{
 		int radius = 3 + random.nextInt(3);
 		int r2 = radius * radius;
-		int r3 = r2 >> 1;
+		// int r3 = r2 >> 1;
 		for (int y = 0; y <= radius >> 1; y++)
 			for (int x = -radius; x <= radius; x++)
 				for (int z = -radius; z <= radius; z++)

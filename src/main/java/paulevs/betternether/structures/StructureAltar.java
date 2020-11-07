@@ -21,7 +21,7 @@ public class StructureAltar implements IStructureWorld
 				world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
 		{
 			IBlockState pillar = BlocksRegister.BLOCK_CINCINNASITE_WALL.getDefaultState();
-			IBlockState head = Blocks.SKULL.getDefaultState();
+			// IBlockState head = Blocks.SKULL.getDefaultState();
 			setBlockAndNotifyAdequately(world, pos, BlocksRegister.BLOCK_CINCINNASITE_PILLAR.getDefaultState());
 			setBlockAndNotifyAdequately(world, pos.up(), BlocksRegister.BLOCK_CINCINNASITE_FIRE_BOWL.getDefaultState().withProperty(BlockCincinnasitFireBowl.STATE, true));
 			setBlockAndNotifyAdequately(world, pos.north().east(), pillar);

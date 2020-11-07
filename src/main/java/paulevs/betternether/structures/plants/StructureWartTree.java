@@ -31,7 +31,7 @@ public class StructureWartTree implements IStructure
 		if (b1 && b2 && b3 && b4 && b5)
 		{
 			int h2 = height >>> 1;
-			int h3 = height >>> 2;
+			// int h3 = height >>> 2;
 			int width = (height >>> 2) + 1;
 			int offset = width >>> 1;
 			List<BlockPos> seedBlocks = new ArrayList<BlockPos>();
@@ -42,7 +42,7 @@ public class StructureWartTree implements IStructure
 				{
 					int pz = z + pos.getZ() - offset;
 					int rh = random.nextInt(h2);
-					int rh2 = random.nextInt(h3);
+					// int rh2 = random.nextInt(h3);
 					for (int y = 0; y < height; y++)
 					{
 						int py = y + pos.getY();

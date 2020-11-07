@@ -52,7 +52,7 @@ public class WorleyNoiseOctaved3D
 				}
 			}
 		}
-		return ids.PosReal(indexX, indexY, indexZ);
+		return ids.PosReal(indexX, indexY, indexZ) % maxID;
 	}
 	
 	private double sqr(double x)

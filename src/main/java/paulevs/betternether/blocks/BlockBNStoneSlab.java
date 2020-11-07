@@ -150,7 +150,7 @@ public abstract class BlockBNStoneSlab extends BlockSlab
 			//System.out.println(hitY);
 			if (item.getItem() == Item.getItemFromBlock(this) && state.getBlock().getDefaultState() == this.getDefaultState())
 			{
-				float pitch = playerIn.cameraPitch;
+				// float pitch = playerIn.cameraPitch;
 				if (state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP && (facing == EnumFacing.DOWN || hitY < 0.5))
 				{
 					worldIn.setBlockState(pos, fullBlock.getDefaultState());

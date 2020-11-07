@@ -26,9 +26,7 @@ import paulevs.betternether.BetterNether;
 import paulevs.betternether.config.ConfigLoader;
 
 public class BlocksRegister
-{
-	private static List<Block> additional;
-	
+{	
 	public static Block BLOCK_EYEBALL;
 	public static Block BLOCK_EYEBALL_SMALL;
 	public static Block BLOCK_EYE_VINE;
@@ -196,7 +194,7 @@ public class BlocksRegister
 		BLOCK_ORANGE_MUSHROOM = registerBlock(new BlockOrangeMushroom(), "BLOCK_ORANGE_MUSHROOM");
 		BLOCK_RED_MOLD = registerBlock(new BlockRedMold(), "BLOCK_RED_MOLD");
 		BLOCK_GRAY_MOLD = registerBlock(new BlockGrayMold(), "BLOCK_GRAY_MOLD");
-		BLOCK_CINCINNASITE_ORE = registerBlock(new BlockCincinnasitOre(), "BLOCK_CINCINNASITE_ORE");
+		BLOCK_CINCINNASITE_ORE = registerBlock(new BlockCincinnasiteOre(), "BLOCK_CINCINNASITE_ORE");
 		BLOCK_CINCINNASITE = registerBlock(new BlockCincinnasite("cincinnasite_block"), "BLOCK_CINCINNASITE");
 		BLOCK_CINCINNASITE_FORGED = registerBlock(new BlockCincinnasite("cincinnasite_forged"), BLOCK_CINCINNASITE, "BLOCK_CINCINNASITE_FORGED");
 		BLOCK_CINCINNASITE_PILLAR = registerBlock(new BlockCincinnasitPillar("cincinnasite_pillar"), BLOCK_CINCINNASITE_FORGED, "BLOCK_CINCINNASITE_PILLAR");
@@ -315,7 +313,8 @@ public class BlocksRegister
 		else
 			return Blocks.AIR;
 	}
-	
+    
+    @SuppressWarnings("unused")
 	private static Block registerBlockDoor(Block block, String key)
 	{
 		if (ConfigLoader.mustInitBlock(key))

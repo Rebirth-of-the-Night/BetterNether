@@ -147,6 +147,7 @@ public class BlockLucisMushroom extends Block
 	//	updateState(worldIn, pos, state);
 	//}
 
+    @SuppressWarnings("unused")
 	private void updateState(World worldIn, BlockPos pos, IBlockState state)
 	{
 		boolean north = worldIn.getBlockState(pos.north()).getBlock() == this;

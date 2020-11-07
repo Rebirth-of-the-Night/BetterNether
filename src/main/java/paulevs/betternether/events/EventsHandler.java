@@ -11,7 +11,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
@@ -62,7 +61,7 @@ public class EventsHandler
 		{
 			Random random = event.getRand();
 			World world = event.getWorld();
-			BNWorldGenerator.generate(world, event.getChunkX(), event.getChunkZ(), world.rand);
+			BNWorldGenerator.generate(world, event.getChunkX(), event.getChunkZ(), random);
 		}
 	}
 	
@@ -71,7 +70,6 @@ public class EventsHandler
 	{
 		if (!event.getWorld().isRemote && event.getWorld().provider.getDimensionType() == DimensionType.NETHER)
 		{
-			Chunk chunk = event.getWorld().getChunkFromChunkCoords(event.getChunkX(), event.getChunkZ());
 			BNWorldGenerator.smoothChunk(event.getWorld(), event.getChunkX(), event.getChunkZ());
 		}
 	}

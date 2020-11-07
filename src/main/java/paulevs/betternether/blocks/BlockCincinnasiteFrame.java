@@ -39,7 +39,8 @@ public class BlockCincinnasiteFrame extends BlockCincinnasite
     {
         return face == EnumFacing.UP ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
     }
-	
+    
+    @SuppressWarnings("deprecation")
 	@SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
