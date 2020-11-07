@@ -41,7 +41,7 @@ import paulevs.betternether.structures.plants.StructureStalagnate;
 import paulevs.betternether.structures.plants.StructureWartCap;
 import paulevs.betternether.structures.plants.StructureWartTree;
 
-public class BNWorldGenerator
+public class BNWorldGenerator 
 {
 	public static StructureEye eyeGen = new StructureEye();
 	public static StructureStalagnate stalagnateGen = new StructureStalagnate();
