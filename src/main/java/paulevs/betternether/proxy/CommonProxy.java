@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import paulevs.betternether.biomes.BiomeRegister;
 import paulevs.betternether.blocks.BlocksRegister;
 import paulevs.betternether.config.ConfigLoader;
@@ -29,7 +30,8 @@ public class CommonProxy
 		RecipeRegister.register();
 		SoundRegister.register();
 		EntityRegister.register();
-		TileEntityRegister.register();
+        TileEntityRegister.register();
+        GameRegistry.registerWorldGenerator(new BNWorldGenerator(), 100);
 		MinecraftForge.EVENT_BUS.register(new EventsHandler());
 	}
 

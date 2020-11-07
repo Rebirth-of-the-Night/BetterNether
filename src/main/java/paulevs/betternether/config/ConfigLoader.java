@@ -37,7 +37,8 @@ public class ConfigLoader
 	private static boolean hasNetherWart;
 	
 	private static int cityDistance;
-	private static boolean hasCities;
+    private static boolean hasCities;
+    private static float cityGenChance;
 	
 	public static void load(File file)
 	{
@@ -48,7 +49,8 @@ public class ConfigLoader
 		biomeSizeY = config.getInt("BiomeSizeY", "Generator", 32, 1, 4096, "Defines size in vertical space");
 		hasCleaningPass = config.getBoolean("SecondPass", "Generator", true, "Enables|Disables second pass for smooth terrain");
 		hasNetherWart = config.getBoolean("NetherWartGeneration", "Generator", true, "Enables|Disables vanilla nether wart generation in biomes");
-		cityDistance = config.getInt("CityGridSize", "Cities", 80, 8, 2048, "City grid size in chunks");
+        cityDistance = config.getInt("CityGridSize", "Cities", 80, 8, 2048, "City grid size in chunks");
+        cityGenChance = config.getFloat("CityGenChance", "Cities", 1F / 4096F, 0, 1, "City generation chance");
 		hasCities = config.getBoolean("CityEnabled", "Cities", true, "Enables|Disables cities");
 		
 		for (Field f : BiomeRegister.class.getDeclaredFields())
@@ -159,7 +161,11 @@ public class ConfigLoader
 	public static int getCityDistance()
 	{
 		return cityDistance;
-	}
+    }
+    
+    public static float getCityGenChance() {
+        return cityGenChance;
+    }
 	
 	public static boolean hasCities()
 	{

@@ -15,6 +15,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkGeneratorHell;
+import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 import paulevs.betternether.biomes.BiomeRegister;
 import paulevs.betternether.biomes.NetherBiome;
 import paulevs.betternether.blocks.BlocksRegister;
@@ -41,7 +45,7 @@ import paulevs.betternether.structures.plants.StructureStalagnate;
 import paulevs.betternether.structures.plants.StructureWartCap;
 import paulevs.betternether.structures.plants.StructureWartTree;
 
-public class BNWorldGenerator 
+public class BNWorldGenerator implements IWorldGenerator
 {
 	public static StructureEye eyeGen = new StructureEye();
 	public static StructureStalagnate stalagnateGen = new StructureStalagnate();
@@ -87,7 +91,7 @@ public class BNWorldGenerator
 	private static double biomeSizeY;
 	private static double subBiomeSize;
 	private static float plantDensity = 1;
-	private static float structueDensity = 1F / 64F;
+	private static float structureDensity = 1F / 64F;
 	private static float oreDensity = 1F / 1024F;
 	
 	public static boolean enablePlayerDamage;
@@ -161,6 +165,14 @@ public class BNWorldGenerator
 		return BIO_ARRAY[x][y][z];
 	}
 
+    @Override
+    public void generate(Random random, int cx, int cz, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        if (!(chunkGenerator instanceof ChunkGeneratorHell) && random.nextFloat() < ConfigLoader.getCityGenChance()) {
+            if (cityManager != null)
+                cityManager.generate(world, cx, cz);
+		}
+    }
+
 	public static void generate(World world, int cx, int cz, Random random)
 	{
 		if (!world.isRemote)
@@ -171,7 +183,7 @@ public class BNWorldGenerator
 			int sz = (cz << 4) | 8;
 			
 			//Structure Generator
-			if (coordinateRandom.nextFloat() < structueDensity)
+			if (coordinateRandom.nextFloat() < structureDensity)
 			{
 				pos = new BlockPos(sx + coordinateRandom.nextInt(8), 32 + coordinateRandom.nextInt(120 - 32), sz + coordinateRandom.nextInt(8));
 				while (world.getBlockState(pos).getBlock() != Blocks.AIR && pos.getY() > 32)
@@ -342,8 +354,6 @@ public class BNWorldGenerator
 				world.setBlockState(p, state_air);
 			}
 		}
-		if (cityManager != null)
-			cityManager.generate(world, cx, cz);
 	}
 	
 	private static boolean isAir(World chunk, BlockPos pos)
@@ -445,7 +455,7 @@ public class BNWorldGenerator
 	
 	public static void setStructureDensity(float density)
 	{
-		structueDensity = density;
+		structureDensity = density;
 	}
 	
 	public static int getSubBiome(int x, int y, int z, int count)
