@@ -21,7 +21,8 @@ public class CityGenerator
 	public CityGenerator()
 	{
 		addBuildingToList("city_center_01", -10, centers);
-		addBuildingToList("city_center_02", -10, centers);
+        addBuildingToList("city_center_02", -10, centers);
+        addBuildingToList("city_flame", -10, centers);
 		
 		addBuildingToList("city_library_01", buildings);
 		addBuildingToList("city_tower_01", buildings);
