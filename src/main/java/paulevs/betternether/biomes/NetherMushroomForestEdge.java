@@ -20,7 +20,7 @@ public class NetherMushroomForestEdge extends NetherMushroomForest
 	public boolean isEdge() {
 		return true;
 	}
-	
+
 	@Override
 	public void genFloorObjects(World world, BlockPos pos, Random random)
 	{

@@ -8,6 +8,7 @@ import com.google.common.base.Predicate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBone;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -29,11 +30,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import paulevs.betternether.BetterNether;
 
-public class BlockBoneMushroom extends Block
+public class BlockBoneMushroom extends Block implements IGrowable
 {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
     {
@@ -205,10 +207,13 @@ public class BlockBoneMushroom extends Block
     @Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
 	{
-		if (state.getValue(AGE) < 2 && rand.nextInt(32) == 0)
-		{
-			worldIn.setBlockState(pos, state.withProperty(AGE, state.getValue(AGE) + 1));
-		}
+        if (worldIn.isRemote) return;
+
+        if (canGrow(worldIn, pos, state, false) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt(32) == 0))
+        {
+            grow(worldIn, rand, pos, state);
+            ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+        }
 	}
     
     private void spawnSeeds(World world, BlockPos pos, Random random)
@@ -231,4 +236,19 @@ public class BlockBoneMushroom extends Block
 			spawnSeeds(worldIn, pos, worldIn.rand);
 		worldIn.destroyBlock(pos, true);
 	}
+
+    @Override
+    public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+        return state.getValue(AGE) < 2;
+    }
+
+    @Override
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+        worldIn.setBlockState(pos, state.withProperty(AGE, state.getValue(AGE) + 1));
+    }
 }

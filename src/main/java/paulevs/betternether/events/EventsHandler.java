@@ -63,7 +63,6 @@ public class EventsHandler
 			BNWorldGenerator.generate(world, event.getChunkX(), event.getChunkZ(), world.rand);
 		}
 	}
-	
 	@SubscribeEvent (priority = EventPriority.HIGHEST)
 	public void onPrePopulate(PopulateChunkEvent.Pre event)
 	{

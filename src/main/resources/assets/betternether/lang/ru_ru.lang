@@ -1,7 +1,7 @@
 container.forge=Печь
 container.chest_of_drawers=Комод
 
-entity.firefly.name=Светлячёк
+entity.firefly_nether.name=Светлячёк
 
 item.black_apple.name=Чёрное яблоко
 

@@ -1,7 +1,7 @@
 container.forge=Forge
 container.chest_of_drawers=Chest of Drawers
 
-entity.firefly.name=Firefly
+entity.firefly_nether.name=Firefly
 
 item.black_apple.name=Black Apple
 
@@ -42,6 +42,7 @@ tile.bone_stairs.name=Bone Stairs
 tile.bone_tile.name=Bone Tile
 tile.bone_wall.name=Bone Wall
 
+
 tile.cincinnasite_bars.name=Cincinnasite Bars
 tile.cincinnasite_block.name=Cincinnasite Block
 tile.cincinnasite_brick_plate.name=Cincinnasite Brick Plate
@@ -64,6 +65,8 @@ tile.cincinnasite_stairs.name=Cincinnasite Stairs
 tile.cincinnasite_tile_large.name=Large Cincinnasite Tile
 tile.cincinnasite_tile_small.name=Small Cincinnasite Tile
 tile.cincinnasite_wall.name=Cincinnasite Wall
+
+tile.chest_of_drawers.name=Chest Of Drawers
 
 tile.egg_plant.name=Egg Plant
 
@@ -132,6 +135,22 @@ tile.quartz_stained_glass_framed.red.name=Framed Quartz Stained Glass Red
 tile.quartz_stained_glass_framed.silver.name=Framed Quartz Stained Glass Silver
 tile.quartz_stained_glass_framed.white.name=Framed Quartz Stained Glass White
 tile.quartz_stained_glass_framed.yellow.name=Framed Quartz Stained Glass Yellow
+tile.quartz_stained_glass_pane.black.name=Quartz Stained Glass Pane Black
+tile.quartz_stained_glass_pane.blue.name=Quartz Stained Glass Pane Blue
+tile.quartz_stained_glass_pane.brown.name=Quartz Stained Glass Pane Brown
+tile.quartz_stained_glass_pane.cyan.name=Quartz Stained Glass Pane Cyan
+tile.quartz_stained_glass_pane.gray.name=Quartz Stained Glass Pane Gray
+tile.quartz_stained_glass_pane.green.name=Quartz Stained Glass Pane Green
+tile.quartz_stained_glass_pane.lightBlue.name=Quartz Stained Glass Pane Light Blue
+tile.quartz_stained_glass_pane.lime.name=Quartz Stained Glass Pane Lime
+tile.quartz_stained_glass_pane.magenta.name=Quartz Stained Glass Pane Magenta
+tile.quartz_stained_glass_pane.orange.name=Quartz Stained Glass Pane Orange
+tile.quartz_stained_glass_pane.pink.name=Quartz Stained Glass Pane Pink
+tile.quartz_stained_glass_pane.purple.name=Quartz Stained Glass Pane Purple
+tile.quartz_stained_glass_pane.red.name=Quartz Stained Glass Pane Red
+tile.quartz_stained_glass_pane.silver.name=Quartz Stained Glass Pane Silver
+tile.quartz_stained_glass_pane.white.name=Quartz Stained Glass Pane White
+tile.quartz_stained_glass_pane.yellow.name=Quartz Stained Glass Pane Yellow
 
 tile.red_mold.name=Red Mold
 

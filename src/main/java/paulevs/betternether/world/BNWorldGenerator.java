@@ -1,10 +1,6 @@
 package paulevs.betternether.world;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherBrick;
@@ -60,11 +56,11 @@ public class BNWorldGenerator
 	public static StructureRedMold redMoldGen = new StructureRedMold();
 	public static StructureGrayMold grayMoldGen = new StructureGrayMold();
 	public static StructureWartCap wartCapGen = new StructureWartCap();
-	
+
 	public static LinkedHashMap<IStructureWorld, Integer> globalStructuresLand = new LinkedHashMap<>();
 	public static LinkedHashMap<IStructureWorld, Integer> globalStructuresLava = new LinkedHashMap<>();
 	public static LinkedHashMap<IStructureWorld, Integer> globalStructuresCave = new LinkedHashMap<>();
-	
+
 	public static boolean hasCleaningPass = true;
 	public static boolean hasEyeGen = true;
 	public static boolean hasStalagnateGen = true;
@@ -81,7 +77,7 @@ public class BNWorldGenerator
 	public static boolean hasRedMoldGen = true;
 	public static boolean hasGrayMoldGen = true;
 	public static boolean hasWartsGen = true;
-	
+
 	private static WorleyNoiseIDDistorted3D noise3d;
 	private static WorleyNoiseIDDistorted3D subbiomesNoise;
 	private static Dither dither;
@@ -91,16 +87,16 @@ public class BNWorldGenerator
 	private static float plantDensity = 1;
 	private static float structureDensity = 1F / 64F;
 	private static float oreDensity = 1F / 1024F;
-	
+
 	public static boolean enablePlayerDamage;
 	public static boolean enableMobDamage;
-	
+
 	private static IBlockState state_air = Blocks.AIR.getDefaultState();
-	
+
 	private static CityStructureManager cityManager;
 	private static BlockPos pos;
 	private static MutableBlockPos popPos = new MutableBlockPos();
-	
+
 	private static final NetherBiome[][][] BIO_ARRAY = new NetherBiome[8][64][8];
 
 	public static void init(World world)
@@ -116,13 +112,13 @@ public class BNWorldGenerator
 			cityManager.setDistance(ConfigLoader.getCityDistance());
 		}
 	}
-	
+
 	public static void save(World world)
 	{
 		if (cityManager != null)
 			cityManager.save(world);
 	}
-	
+
 	private static void makeBiomeArray(World world, int sx, int sz)
 	{
 		NetherBiome id;
@@ -146,7 +142,7 @@ public class BNWorldGenerator
 			}
 		}
 	}
-	
+
 	private static NetherBiome getBiomeLocal(int x, int y, int z, Random random)
 	{
 		x = (x + random.nextInt(2)) >> 1;
@@ -169,7 +165,7 @@ public class BNWorldGenerator
 			NetherBiome biome;
 			int sx = (cx << 4) | 8;
 			int sz = (cz << 4) | 8;
-			
+
 			// Structure Generator
 			if (random.nextFloat() < structureDensity)
 			{
@@ -203,9 +199,9 @@ public class BNWorldGenerator
 					}
 				}
 			}
-			
+
 			makeBiomeArray(world, sx, sz);
-			
+
 			// Total Populator
 			for (int x = 0; x < 16; x++)
 			{
@@ -219,9 +215,9 @@ public class BNWorldGenerator
 						popPos.setPos(wx, y, wz);
 						if (world.getBlockState(popPos).isFullBlock())
 						{
-							
+
 							biome = getBiomeLocal(x, y, z, random);
-							
+
 							// Ground Generation
 							if (world.getBlockState(popPos.up()).getBlock() == Blocks.AIR)
 							{
@@ -229,14 +225,14 @@ public class BNWorldGenerator
 								if (random.nextFloat() <= plantDensity)
 									biome.genFloorObjects(world, popPos, random);
 							}
-							
+
 							// Ceiling Generation
 							else if (world.getBlockState(popPos.down()).getBlock() == Blocks.AIR)
 							{
 								if (random.nextFloat() <= plantDensity)
 									biome.genCeilObjects(world, popPos, random);
 							}
-							
+
 							// Wall Generation
 							else if (((x + y + z) & 1) == 0)
 							{
@@ -274,17 +270,17 @@ public class BNWorldGenerator
 			}
 		}
 	}
-	
+
 	private static boolean isEdge(World world, NetherBiome centerID, int x, int y, int z, int distance)
 	{
 		return distance > 0 && (centerID != getBiome(world, x + distance, y, z) ||
-								centerID != getBiome(world, x - distance, y, z) ||
-								centerID != getBiome(world, x, y + distance, z) ||
-								centerID != getBiome(world, x, y - distance, z) ||
-								centerID != getBiome(world, x, y, z + distance) ||
-								centerID != getBiome(world, x, y, z - distance));
+				centerID != getBiome(world, x - distance, y, z) ||
+				centerID != getBiome(world, x, y + distance, z) ||
+				centerID != getBiome(world, x, y - distance, z) ||
+				centerID != getBiome(world, x, y, z + distance) ||
+				centerID != getBiome(world, x, y, z - distance));
 	}
-	
+
 	private static NetherBiome getBiome(World world, int x, int y, int z)
 	{
 		double px = (double) dither.ditherX(x, y, z) * biomeSizeXZ;
@@ -293,23 +289,26 @@ public class BNWorldGenerator
 		Biome biome = world.getBiome(new BlockPos(x, y, z));
 		return WeightedRandom.getRandomItem(new Random(noise3d.GetValue(px, py, pz)), BiomeRegister.getBiomesForMCBiome(biome));
 	}
-	
+
+	// generate cities
 	public static void smoothChunk(World world, int cx, int cz)
 	{
 		if (hasCleaningPass)
 		{
 			int wx = (cx << 4) | 8;
 			int wz = (cz << 4) | 8;
-			List<BlockPos> pos = new ArrayList<BlockPos>();
+			HashSet<BlockPos> posToReplace = new HashSet<>();
 			BlockPos up;
 			BlockPos down;
 			BlockPos north;
 			BlockPos south;
 			BlockPos east;
 			BlockPos west;
+
 			for (int y = 32; y < 110; y++)
 			{
 				for (int x = 0; x < 16; x++)
+				{
 					for (int z = 0; z < 16; z++)
 					{
 						popPos.setPos(x + wx, y, z + wz);
@@ -321,42 +320,71 @@ public class BNWorldGenerator
 							south = popPos.south();
 							east = popPos.east();
 							west = popPos.west();
+
 							if (isAir(world, north) && isAir(world, south))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, east) && isAir(world, west))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, up) && isAir(world, down))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, popPos.north().east().down()) && isAir(world, popPos.south().west().up()))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, popPos.south().east().down()) && isAir(world, popPos.north().west().up()))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, popPos.north().west().down()) && isAir(world, popPos.south().east().up()))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 							else if (isAir(world, popPos.south().west().down()) && isAir(world, popPos.north().east().up()))
-								pos.add(new BlockPos(popPos));
+							{
+								posToReplace.add(new BlockPos(popPos));
+							}
 						}
 					}
+				}
 			}
-			for (BlockPos p : pos)
+
+			// Process 16 blocks per tick
+			int blocksPerTick = 16;
+			int processedBlocks = 0;
+
+			for (BlockPos p : posToReplace)
 			{
 				world.setBlockState(p, state_air);
+
+				processedBlocks++;
+				if (processedBlocks >= blocksPerTick)
+				{
+					// Save the progress and return for the next tick
+					return;
+				}
 			}
 		}
+
 		if (cityManager != null)
 			cityManager.generate(world, cx, cz);
 	}
-	
+
 	private static boolean isAir(World chunk, BlockPos pos)
 	{
 		return chunk.getBlockState(pos).getBlock() == Blocks.AIR;
 	}
-	
+
 	private static boolean canReplace(World chunk, BlockPos pos)
 	{
 		return !isAir(chunk, pos) && ConfigLoader.isReplace(chunk.getBlockState(pos).getBlock());
 	}
-	
+
 	private static void spawnOre(IBlockState state, World world, BlockPos pos, Random random)
 	{
 		for (int i = 0; i < 6 + random.nextInt(11); i++)
@@ -368,7 +396,7 @@ public class BNWorldGenerator
 			}
 		}
 	}
-	
+
 	public static void updateGenSettings()
 	{
 		biomeSizeXZ = 1.0 / (double) ConfigLoader.getBiomeSizeXZ();
@@ -393,7 +421,7 @@ public class BNWorldGenerator
 		hasRedMoldGen = BlocksRegister.BLOCK_RED_MOLD != Blocks.AIR;
 		hasGrayMoldGen = BlocksRegister.BLOCK_GRAY_MOLD != Blocks.AIR;
 		hasWartsGen = ConfigLoader.hasNetherWart();
-		
+
 		globalStructuresLand.clear();
 		for (int i = 0; i < ConfigLoader.getScInfosLand().length; i++) {
 			ConfigLoader.StructureConfigInfo info = ConfigLoader.getScInfosLand()[i];
@@ -403,7 +431,7 @@ public class BNWorldGenerator
 				globalStructuresLand.put(new StructureBuilding(info.name, info.offsetY), info.weight);
 			}
 		}
-		
+
 		globalStructuresLava.clear();
 		for (int i = 0; i < ConfigLoader.getScInfosLava().length; i++) {
 			ConfigLoader.StructureConfigInfo info = ConfigLoader.getScInfosLava()[i];
@@ -413,7 +441,7 @@ public class BNWorldGenerator
 				globalStructuresLava.put(new StructureBuilding(info.name, info.offsetY), info.weight);
 			}
 		}
-		
+
 		globalStructuresCave.clear();
 		for (int i = 0; i < ConfigLoader.getScInfosCave().length; i++) {
 			ConfigLoader.StructureConfigInfo info = ConfigLoader.getScInfosCave()[i];
@@ -434,8 +462,8 @@ public class BNWorldGenerator
 				return item.getKey();
 		}
 		return null;
-	} 
-	
+	}
+
 	private static BlockPos downRay(World world, BlockPos start)
 	{
 		Block b;
@@ -451,17 +479,17 @@ public class BNWorldGenerator
 		}
 		return null;
 	}
-	
+
 	public static void setPlantDensity(float density)
 	{
 		plantDensity = density;
 	}
-	
+
 	public static void setStructureDensity(float density)
 	{
 		structureDensity = density;
 	}
-	
+
 	public static int getSubBiome(int x, int y, int z)
 	{
 		double px = (double) dither.ditherX(x, y, z) * subBiomeSize;
@@ -469,7 +497,7 @@ public class BNWorldGenerator
 		double pz = (double) dither.ditherZ(x, y, z) * subBiomeSize;
 		return subbiomesNoise.GetValue(px, py, pz);
 	}
-	
+
 	public static NetherBiome getBiome(World world, BlockPos pos)
 	{
 		NetherBiome biome = getBiome(world, pos.getX(), pos.getY(), pos.getZ());
@@ -479,7 +507,7 @@ public class BNWorldGenerator
 			biome = biome.getSubBiome(pos.getX(), pos.getY(), pos.getZ());
 		return biome;
 	}
-	
+
 	public static BlockPos getNearestCity(World world, int cx, int cz)
 	{
 		return cityManager.getNearestStructure(world, cx, cz);

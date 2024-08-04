@@ -13,7 +13,7 @@ public class EntityRegister
 	
 	public static void register()
 	{
-		RegisterEntity("firefly", EntityFirefly.class);
+		RegisterEntity("firefly_nether", EntityFirefly.class);
 		EntityRegistry.addSpawn(EntityFirefly.class, 100, 5, 10, EnumCreatureType.AMBIENT, Biomes.HELL);
 	}
 	

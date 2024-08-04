@@ -84,19 +84,38 @@ public class BigStructureCity extends BigStructure
 					}
 				}
 			}*/
-			for (int y = 5; y < 32; y++)
-			{
-				for (int x = 0; x < 16; x++)
-				{
+// Create a list to hold the threads
+			List<Thread> threads = new ArrayList<>();
+
+			for (int y = 5; y < 32; y++) {
+				for (int x = 0; x < 16; x++) {
 					int wx = x + sx;
-					for (int z = 0; z < 16; z++)
-					{
+					for (int z = 0; z < 16; z++) {
 						int wz = z + sz;
 						BlockPos pos = new BlockPos(wx, y, wz);
-						Block b = world.getBlockState(pos).getBlock();
-						if (b == Blocks.FLOWING_LAVA)
-							world.setBlockState(pos, LAVA, 2 | 16);
+
+						// Create a new thread for each block check
+						Thread thread = new Thread(() -> {
+							IBlockState blockState = world.getBlockState(pos);
+							Block block = blockState.getBlock();
+							if (block == Blocks.FLOWING_LAVA) {
+								world.setBlockState(pos, LAVA, 2 | 16);
+							}
+						});
+
+						// Start the thread and add it to the list
+						thread.start();
+						threads.add(thread);
 					}
+				}
+			}
+
+			// Wait for all threads to finish
+			for (Thread thread : threads) {
+				try {
+					thread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 			return true;

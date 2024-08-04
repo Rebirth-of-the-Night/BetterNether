@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 public class BoundingBox
 {
 	int x1, x2, z1, z2;
-	
+
 	public BoundingBox(int x1, int z1, int x2, int z2)
 	{
 		this.x1 = x1;
@@ -14,7 +14,7 @@ public class BoundingBox
 		this.z1 = z1;
 		this.z2 = z2;
 	}
-	
+
 	public BoundingBox(BlockPos size, int offsetX, int offsetZ)
 	{
 		this.x1 = offsetX;
@@ -22,7 +22,7 @@ public class BoundingBox
 		this.z1 = offsetZ;
 		this.z2 = z1 + size.getZ();
 	}
-	
+
 	public BoundingBox(BlockPos size)
 	{
 		this.x1 = 0;
@@ -30,7 +30,7 @@ public class BoundingBox
 		this.z1 = 0;
 		this.z2 = size.getZ();
 	}
-	
+
 	public boolean isColliding(BoundingBox bb)
 	{
 		boolean colX = (bb.x1 < x2) && (x1 < bb.x2);
@@ -47,12 +47,12 @@ public class BoundingBox
 	{
 		return new BoundingBox(x1 - offset.getX(), z1 - offset.getZ(), x2 - offset.getX(), z2 - offset.getZ());
 	}
-	
+
 	public String toString()
 	{
 		return x1 + " " + z1 + " " + x2 + " " + z2;
 	}
-	
+
 	public void rotate(Rotation rotation)
 	{
 		BlockPos start = new BlockPos(x1, 0, z1);
@@ -73,17 +73,17 @@ public class BoundingBox
 	{
 		return new BlockPos((x2 + x1) * 0.5, 0, (z2 + z1) * 0.5);
 	}
-	
+
 	public int getSideX()
 	{
 		return x2 - x1;
 	}
-	
+
 	public int getSideZ()
 	{
 		return z2 - z1;
 	}
-	
+
 	public int getMinX()
 	{
 		return x1;
@@ -93,7 +93,7 @@ public class BoundingBox
 	{
 		return x2;
 	}
-	
+
 	public int getMinZ()
 	{
 		return z1;

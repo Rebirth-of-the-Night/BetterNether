@@ -4,7 +4,7 @@
 container.forge=Forge
 container.chest_of_drawers=抽屉柜
 
-entity.firefly.name=飞虫
+entity.firefly_nether.name=飞虫
 
 item.black_apple.name=黑苹果
 

@@ -1,0 +1,164 @@
+container.forge=Forge
+container.chest_of_drawers=Commode
+
+entity.firefly_nether.name=Luciole
+
+item.black_apple.name=Pomme noire
+
+item.cincinnasite.name=Cincinnasite
+item.cincinnasite_axe.name=Hache en cincinnasite
+item.cincinnasite_axe_diamond.name=Hache en cincinnasite-diamant
+item.cincinnasite_pickaxe.name=Pioche en cincinnasite
+item.cincinnasite_pickaxe_diamond.name=Pioche en cincinnasite-diamant
+
+item.stalagnate_bowl.name=Ecueil en stalagnate
+item.stalagnate_bowl_apple.name=Pomme noire
+item.stalagnate_bowl_mushroom.name=Soupe aux champignons
+item.stalagnate_bowl_wart.name=Soupe aux verrues
+
+itemGroup.better_nether=Meilleur Nether
+
+message.spawn_help=§c§lVous devez détenir de la poussière de glowstone pour définir votre point de spawn ici
+message.spawn_set= §2§l Votre point de spawn a été défini ici
+
+tile.agave.name=Agave
+
+tile.barrel_cactus.name=Barrel Cactus
+
+tile.black_apple_seed.name=Graine de pomme noire
+tile.black_bush.name=Buisson noir
+
+tile.block_eyeball.name=Bloc oeil
+tile.block_eyeball_small.name=Petit bloc oeil
+
+tile.bone_block.name=Bloc d'os
+tile.bone_button.name=Bouton en os
+tile.bone_cincinnasite_door.name=Porte en os-cincinnasite
+tile.bone_mushroom.name=Spores de champignon en os
+tile.bone_plate.name=Plaque en os
+tile.bone_reed_door.name=Porte en os-roseau
+tile.bone_slab_half.name=Dalles en os
+tile.bone_stairs.name=Escalier en os
+tile.bone_tile.name=Carreau en os
+tile.bone_wall.name=Mur en os
+
+tile.cincinnasite_bars.name=Barreaudage en cincinnasite
+tile.cincinnasite_block.name=Bloc en cincinnasite
+tile.cincinnasite_brick_plate.name=Plaque en brique de cincinnasite
+tile.cincinnasite_bricks.name=Briques en cincinnasite
+tile.cincinnasite_bricks_pillar.name=Pilier en brique de cincinnasite
+tile.cincinnasite_button.name=Bouton en cincinnasite
+tile.cincinnasite_carved.name=Cincinnasite sculpté
+tile.cincinnasite_fire_bowl.name=Ecuelle en feu en cincinnasite
+tile.cincinnasite_forge.name=Forge en cincinnasite
+tile.cincinnasite_forged.name=Bloc en cincinnasite forgé
+tile.cincinnasite_frame.name=Cadre en cincinnasite
+tile.cincinnasite_lantern.name=Lanterne en cincinnasite
+tile.cincinnasite_ore.name=Minerai de cincinnasite
+tile.cincinnasite_pedestal.name=Pied de cincinnasite
+tile.cincinnasite_pillar.name=Pilier en cincinnasite
+tile.cincinnasite_plate.name=Plaque en cincinnasite
+tile.cincinnasite_pot.name=Pot en cincinnasite
+tile.cincinnasite_slab_half.name=Dalle en cincinnasite
+tile.cincinnasite_stairs.name=Escalier en cincinnasite
+tile.cincinnasite_tile_large.name=Carreau en cincinnasite grand
+tile.cincinnasite_tile_small.name=Petit carreau en cincinnasite
+tile.cincinnasite_wall.name=Mur en cincinnasite
+
+tile.egg_plant.name=Plante oeufs
+
+tile.eye_seed.name= Graine d'oeil
+
+tile.gray_mold.name=Moisissure grise
+
+tile.ink_bush.name=Buisson d'encre
+tile.ink_bush_seed.name=Graine de buisson d'encre
+
+tile.lucis_spore.name=Spore de lucis
+
+tile.magma_flower.name=Fleur de magma
+
+tile.nether_brick_tile_large.name=Carreau de brique infernale grand
+tile.nether_brick_tile_slab_half.name=Dalle de carreaux de brique infernale
+tile.nether_brick_tile_small.name= Petit carreau de brique infernale
+tile.nether_brick_tile_stairs.name=Escaliers de petits carreaux de brique infernale
+tile.nether_brick_wall.name=Mur de brique infernale
+tile.nether_cactus.name=Cactus infernal
+tile.nether_grass.name=Herbe infernale
+tile.nether_mycelium.name=Mycélium infernal
+tile.nether_reed.name=Roseau infernal
+tile.netherrack_furnace.name=Fourneau au netherrack
+tile.netherrack_moss.name=Mousse de netherrack
+
+tile.orange_mushroom.name=Champignon orange
+
+tile.pig_statue_01.name=Statue respawner
+
+tile.potted_plant_1.name=Plante en pot 1
+
+tile.quartz_glass.name=Verre en quartz
+tile.quartz_glass_framed.name=Verre en quartz encadré
+tile.quartz_glass_framed_pane.name=Verre en quartz encadré en panneau
+tile.quartz_glass_pane.name=Panneau de verre en quartz
+tile.quartz_stained_glass.black.name=Verre teinté en noir en quartz
+tile.quartz_stained_glass.blue.name=Verre teinté en bleu en quartz
+tile.quartz_stained_glass.brown.name=Verre teinté marron en quartz
+tile.quartz_stained_glass.cyan.name=Verre teinté en cyan en quartz
+tile.quartz_stained_glass.gray.name=Verre teinté gris en quartz
+tile.quartz_stained_glass.green.name=Verre teinté vert en quartz
+tile.quartz_stained_glass.lightBlue.name=Verre teinté bleu clair en quartz
+tile.quartz_stained_glass.lime.name=Verre teinté vert lime en quartz
+tile.quartz_stained_glass.magenta.name=Verre teinté magenta en quartz
+tile.quartz_stained_glass.orange.name=Verre teinté orange en quartz
+tile.quartz_stained_glass.pink.name=Verre teinté rose en quartz
+tile.quartz_stained_glass.purple.name=Verre teinté violet en quartz
+tile.quartz_stained_glass.red.name=Verre teinté rouge en quartz
+tile.quartz_stained_glass.silver.name=Verre teinté argenté en quartz
+tile.quartz_stained_glass.white.name=Verre teinté blanc en quartz
+tile.quartz_stained_glass.yellow.name=Verre teinté jaune en quartz
+tile.quartz_stained_glass_framed.black.name=Verre teinté noir encadré en quartz
+tile.quartz_stained_glass_framed.blue.name=Verre teinté bleu encadré en quartz
+tile.quartz_stained_glass_framed.brown.name=Verre teinté marron encadré en quartz
+tile.quartz_stained_glass_framed.cyan.name=Verre teinté cyan encadré en quartz
+tile.quartz_stained_glass_framed.gray.name=Verre teinté gris encadré en quartz
+tile.quartz_stained_glass_framed.green.name=Verre teinté vert encadré en quartz
+tile.quartz_stained_glass_framed.lightBlue.name=Verre teinté bleu clair encadré en quartz
+tile.quartz_stained_glass_framed.lime.name=Verre teinté vert lime encadré en quartz
+tile.quartz_stained_glass_framed.magenta.name=Verre teinté magenta encadré en quartz
+tile.quartz_stained_glass_framed.orange.name=Verre teinté orange encadré en quartz
+tile.quartz_stained_glass_framed.pink.name=Verre teinté rose encadré en quartz
+tile.quartz_stained_glass_framed.purple.name=Verre teinté violet encadré en quartz
+tile.quartz_stained_glass_framed.red.name=Verre teinté rouge encadré en quartz
+tile.quartz_stained_glass_framed.silver.name=Verre teinté argenté encadré en quartz
+tile.quartz_stained_glass_framed.white.name=Verre teinté blanc encadré en quartz
+tile.quartz_stained_glass_framed.yellow.name=Verre teinté jaune encadré en quartz
+
+tile.red_mold.name=Moisissure rouge
+
+tile.reeds_block.name=Bloc de roseaux
+tile.reeds_button.name=Bouton de roseaux
+tile.reeds_fence.name=Clôture de roseaux
+tile.reeds_gate.name=Barrière de roseaux
+tile.reeds_ladder.name=Échelle de roseaux
+tile.reeds_plate.name=Plaque de roseaux
+tile.reeds_slab_half.name=Dalles de roseaux
+tile.reeds_stairs.name=Escalier en roseaux
+
+tile.smoker.name=Fumeur
+
+tile.stalagnate.name=Stalagnate
+tile.stalagnate_bark.name=Écorce de stalagnate
+tile.stalagnate_bowl_placed.name=Écuelle en stalagnate
+tile.stalagnate_planks.name=Planches de stalagnate
+tile.stalagnate_planks_button.name=Bouton en planche de stalagnate
+tile.stalagnate_planks_fence.name=Clôture en planche de stalagnate
+tile.stalagnate_planks_gate.name=Barrière en planche de stalagnate
+tile.stalagnate_planks_plate.name=Plaque en planche de stalagnate
+tile.stalagnate_planks_slab_half.name=Dalles en planches de stalagnate
+tile.stalagnate_planks_stairs.name=Escalier en planche de stalagnate
+tile.stalagnate_seed.name=Graine de stalagnate
+tile.wart_seed.name=Graine de verrue
+
+commands.findnethercity.usage.console=Aucune coordonnée en entrée
+commands.findnethercity.usage.coordinates=Coordonnées erronées
+commands.findnethercity.usage=Mauvaise utilisation, doit être /findNetherCity ou /findNetherCity x y z

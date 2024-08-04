@@ -16,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import paulevs.betternether.BetterNether;
@@ -96,16 +97,18 @@ public class BlockEyeSeed extends Block implements IGrowable
 	}
 	
 	@Override
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random)
     {
-		if (!worldIn.isRemote)
-        {
-            super.updateTick(worldIn, pos, state, random);
-			if (!ConfigLoader.isTerrain(worldIn.getBlockState(pos.up()).getBlock()))
-				worldIn.destroyBlock(pos, true);
-			else if (random.nextInt(16) == 0 && canGrow(worldIn, pos, state, false))
-	        	grow(worldIn, random, pos, state);
-        }
+		if (worldIn.isRemote) return;
+
+		super.updateTick(worldIn, pos, state, random);
+		if (!ConfigLoader.isTerrain(worldIn.getBlockState(pos.up()).getBlock()))
+			worldIn.destroyBlock(pos, true);
+		else if (canGrow(worldIn, pos, state, false) && ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(16) == 0))
+		{
+			grow(worldIn, random, pos, state);
+			ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+		}
     }
 	
 	@Override

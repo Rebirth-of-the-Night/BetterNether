@@ -24,6 +24,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import paulevs.betternether.BetterNether;
 import paulevs.betternether.config.ConfigLoader;
 
@@ -72,6 +73,8 @@ public class BlockWartSeed extends Block implements IGrowable
 	@Override
 	public void grow(World world, Random random, BlockPos pos, IBlockState state)
 	{
+		if (!TerrainGen.saplingGrowTree(world, random, pos)) return;
+
 		IBlockState bricks = Blocks.NETHER_BRICK.getDefaultState();
 		IBlockState redBricks = Blocks.RED_NETHER_BRICK.getDefaultState();
 		IBlockState wart = Blocks.NETHER_WART_BLOCK.getDefaultState();

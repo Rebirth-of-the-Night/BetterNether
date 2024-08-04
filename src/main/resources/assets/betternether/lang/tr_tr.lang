@@ -4,7 +4,7 @@
 container.forge=Forge
 container.chest_of_drawers=Sandık Çekmecesi
 
-entity.firefly.name=Ateş Böceği
+entity.firefly_nether.name=Ateş Böceği
 
 item.black_apple.name=Koyu Elma
 

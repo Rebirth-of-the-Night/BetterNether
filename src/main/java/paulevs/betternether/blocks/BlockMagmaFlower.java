@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMagma;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -20,9 +21,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import paulevs.betternether.BetterNether;
 
-public class BlockMagmaFlower extends Block
+public class BlockMagmaFlower extends Block implements IGrowable
 {
 	public static final PropertyInteger SIZE = PropertyInteger.create("size", 0, 3);
 	private static final AxisAlignedBB COLLIDE_AABB = new AxisAlignedBB(0.0625, 0.0, 0.0625, 0.9375, 0.75, 0.9375);
@@ -57,21 +59,17 @@ public class BlockMagmaFlower extends Block
 		if (!canPlaceBlockAt(worldIn, pos))
 			worldIn.destroyBlock(pos, true);
     }
-	
-	@Override
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
-    {
-		if (!worldIn.isRemote)
-        {
-            super.updateTick(worldIn, pos, state, random);
-            int size = state.getValue(SIZE);
-			if (!canPlaceBlockAt(worldIn, pos))
-				worldIn.destroyBlock(pos, true);
-			else if (size < 3 && random.nextInt(16) == 0)
+
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+
+		if (worldIn.isRemote) return;
+
+		super.updateTick(worldIn, pos, state, rand);
+		if (canGrow(worldIn, pos, state, false) && (ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt(16) == 0)))
 			{
-				worldIn.setBlockState(pos, state.withProperty(SIZE, size + 1));
-			}
-        }
+				grow(worldIn, rand, pos, state);
+				ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+		}
     }
 	
 	@Override
@@ -129,8 +127,34 @@ public class BlockMagmaFlower extends Block
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state)
 	{
-		if (state.getValue(SIZE) == 2)
+		if (state.getValue(SIZE) == 3)
 			spawnSeeds(worldIn, pos, worldIn.rand);
 		worldIn.destroyBlock(pos, true);
+	}
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+		if (!canPlaceBlockAt(worldIn, pos))
+		{
+			return false;
+		}
+		return state.getValue(SIZE) < 3;
+	}
+
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		if (worldIn.isRemote) return;
+
+		int size = state.getValue(SIZE);
+		if (!canPlaceBlockAt(worldIn, pos))
+			worldIn.destroyBlock(pos, true);
+		else if (canGrow(worldIn, pos, state, false))
+		{
+			worldIn.setBlockState(pos, state.withProperty(SIZE, size + 1));
+		}
 	}
 }

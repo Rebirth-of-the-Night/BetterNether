@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import paulevs.betternether.BetterNether;
@@ -115,14 +116,17 @@ public class BlockInkBushSeed extends Block implements IGrowable
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
 	{
+		if (worldIn.isRemote) return;
+
 		if (!canStay(worldIn, pos))
 		{
 			this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
 		}
-		else if (rand.nextInt(16) == 0)
+		else if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt(16) == 0))
 		{
 			worldIn.setBlockState(pos, BlocksRegister.BLOCK_INK_BUSH.getDefaultState());
+			ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
 		}
 	}
 	

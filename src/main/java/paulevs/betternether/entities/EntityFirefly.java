@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
 import elucent.albedo.event.GatherLightsEvent;
@@ -43,7 +45,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
 	private static final DataParameter<Byte> B = EntityDataManager.<Byte>createKey(EntityFirefly.class, DataSerializers.BYTE);
 	private static final DataParameter<Float> SIZE = EntityDataManager.<Float>createKey(EntityFirefly.class, DataSerializers.FLOAT);
 	private static final DataParameter<Float> OFFSET = EntityDataManager.<Float>createKey(EntityFirefly.class, DataSerializers.FLOAT);
-	
+
 	private Random random;
 	private boolean sitting;
 	private boolean wantToSit;
@@ -59,14 +61,48 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
 		//this.setRenderDistanceWeight(4);
 		random = new Random();
 	}
-	
-	//@SideOnly(Side.CLIENT)
-	public boolean getCanSpawnHere()
-    {
+
+	public boolean getCanSpawnHere() {
 		NetherBiome biome = BNWorldGenerator.getBiome(this.world, this.getPosition());
-		return biome == BiomeRegister.BIOME_GRASSLANDS || biome == BiomeRegister.BIOME_NETHER_JUNGLE;
-    }
-	
+
+		return (biome == BiomeRegister.BIOME_GRASSLANDS ||
+				biome == BiomeRegister.BIOME_NETHER_JUNGLE ||
+				biome == BiomeRegister.BIOME_MUSHROOM_FOREST ||
+				biome == BiomeRegister.BIOME_MUSHROOM_FOREST_EDGE);
+	}
+
+	public int getSpawnWeight(EnumCreatureType type, World world) {
+		return 30; // Set a higher spawn weight (default is 5)
+	}
+
+	/*@Nullable
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+		// Spawn additional fireflies nearby
+		int count = 2 + random.nextInt(4);
+		for (int i = 0; i < count; i++) {
+			float dx = random.nextFloat() * 4 - 2;
+			float dy = random.nextFloat() * 2;
+			float dz = random.nextFloat() * 4 - 2;
+			EntityFirefly firefly = new EntityFirefly(world);
+			firefly.setLocationAndAngles(posX + dx, posY + dy, posZ + dz, rotationYaw, 0.0F);
+			world.spawnEntity(firefly);
+		}
+		return livingdata;
+	}
+
+	 */
+	@Nullable
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+		// Spawn one firefly nearby
+		float dx = random.nextFloat() * 4 - 2;
+		float dy = random.nextFloat() * 2;
+		float dz = random.nextFloat() * 4 - 2;
+		EntityFirefly firefly = new EntityFirefly(world);
+		firefly.setLocationAndAngles(posX + dx, posY + dy, posZ + dz, rotationYaw, 0.0F);
+		world.spawnEntity(firefly);
+		return livingdata;
+	}
+
 	protected void entityInit()
     {
         super.entityInit();
@@ -88,13 +124,6 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
 
 	@Override
 	protected void collideWithNearbyEntities() { }
-
-	@Override
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
-	}
 
 	@Override
     public void onUpdate()
@@ -235,7 +264,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
 	{
 		return true;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender()
@@ -248,7 +277,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
     {
         return 1.0F;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void bindColor()
     {
@@ -257,7 +286,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
     			(Byte) this.dataManager.get(G),
     			(Byte) this.dataManager.get(B));
     }
-    
+
     @SideOnly(Side.CLIENT)
     public void transform()
     {
@@ -267,7 +296,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
     			(Float) this.dataManager.get(SIZE),
     			(Float) this.dataManager.get(SIZE));
     }
-    
+
     @Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
@@ -277,7 +306,7 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
     	compound.setByte("B", ((Byte) this.dataManager.get(B)));
     	compound.setFloat("Size", (Float) this.dataManager.get(SIZE));
     }
-    
+
     @Override
     public void readEntityFromNBT(NBTTagCompound compound)
     {
@@ -301,13 +330,18 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
 				(float) (((Byte) this.dataManager.get(G)) & 255) / 255F,
 				(float) (((Byte) this.dataManager.get(B)) & 255) / 255F).radius(2F).build();
     }
-    
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(4.0D);
+	}
+
     @Override
     @Optional.Method(modid="albedo")
 	public void gatherLights(GatherLightsEvent event, Entity entity) {
 		event.add(this.provideLight());
 	}
-	
+
 	protected boolean canTriggerWalking()
     {
         return false;
@@ -320,52 +354,41 @@ public class EntityFirefly extends EntityAmbientCreature implements ILightProvid
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos)
     {
     }
-    
+
     @Nullable
     @Override
     public SoundEvent getAmbientSound()
     {
         return random.nextInt(4) != 0 ? null : (this.sitting ? SoundRegister.FLY_SIT_AMBIENT : SoundRegister.FLY_SOUND);
     }
-    
+
     @Override
     protected SoundEvent getDeathSound()
     {
     	return SoundRegister.FLY_DEATH;
     }
-    
+
     @Override
     protected SoundEvent getHurtSound(DamageSource d)
     {
     	return random.nextInt(2) == 0 ? SoundRegister.FLY_HURT1 : SoundRegister.FLY_HURT2;
     }
-    
+
     @Override
     public float getSoundVolume()
     {
         return this.sitting ? 0.1F + random.nextFloat() * 0.15F : 0.2F + random.nextFloat() * 0.2F;
     }
-    
+
     @Override
     public float getSoundPitch()
     {
         return random.nextFloat() * 0.4F + 0.8F;
     }
-    
+
     private void updateOffset()
     {
     	//offset = 1.3F - (Float) this.dataManager.get(SIZE) * 1.06F;
     	this.dataManager.set(OFFSET, 1.3F - (Float) this.dataManager.get(SIZE) * 1.06F);
-    }
-    
-    @Nullable
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
-    {
-		this.dataManager.set(R, (byte) (128 | random.nextInt(128)));
-		this.dataManager.set(G, (byte) (128 | random.nextInt(128)));
-		this.dataManager.set(B, (byte) (128 | random.nextInt(128)));
-		this.dataManager.set(SIZE, 0.25F + random.nextFloat() * 0.25F);
-		updateOffset();
-        return livingdata;
     }
 }

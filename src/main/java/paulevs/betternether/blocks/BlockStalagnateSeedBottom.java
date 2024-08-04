@@ -17,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import paulevs.betternether.config.ConfigLoader;
@@ -83,19 +84,19 @@ public class BlockStalagnateSeedBottom extends Block implements IGrowable
 			worldIn.setBlockState(pos.up(h2), BlocksRegister.BLOCK_STALAGNATE_TOP.getDefaultState());
 		}
 	}
-	
+
 	@Override
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
-    {
-		if (!worldIn.isRemote)
-        {
-            super.updateTick(worldIn, pos, state, random);
-			if (!canPlaceBlockAt(worldIn, pos))
-				worldIn.destroyBlock(pos, true);
-			else if (random.nextInt(16) == 0 && canGrow(worldIn, pos, state, false))
-	        	grow(worldIn, random, pos, state);
-        }
-    }
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+	{
+		if (worldIn.isRemote) return;
+
+		super.updateTick(worldIn, pos, state, random);
+		if (!ConfigLoader.isTerrain(worldIn.getBlockState(pos.down()).getBlock()))
+			worldIn.destroyBlock(pos, true);
+		else if (TerrainGen.saplingGrowTree(worldIn, random, pos) && random.nextInt(16) == 0 && canGrow(worldIn, pos, state, false))
+			grow(worldIn, random, pos, state);
+
+	}
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state)

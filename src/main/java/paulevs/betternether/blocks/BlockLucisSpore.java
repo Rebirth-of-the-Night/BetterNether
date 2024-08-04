@@ -17,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import paulevs.betternether.BetterNether;
 import paulevs.betternether.config.ConfigLoader;
 
@@ -218,13 +219,16 @@ public class BlockLucisSpore extends Block implements IGrowable
 	}
 	
 	@Override
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random)
     {
-		if (!worldIn.isRemote)
-        {
-            super.updateTick(worldIn, pos, state, random);
-			if (random.nextInt(16) == 0)
-	        	grow(worldIn, random, pos, state);
-        }
+		if (worldIn.isRemote) return;
+
+		super.updateTick(worldIn, pos, state, random);
+
+		if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(16) == 0))
+		{
+			grow(worldIn, random, pos, state);
+			ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+		}
     }
 }

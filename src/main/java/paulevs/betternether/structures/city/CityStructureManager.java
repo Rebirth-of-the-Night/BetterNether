@@ -21,10 +21,10 @@ public class CityStructureManager extends StructureManager
 {
 	protected static final IBlockState AIR = Blocks.AIR.getDefaultState();
 	protected static final IBlockState LAVA = Blocks.LAVA.getDefaultState();
-	
+
 	protected CityGenerator generator = new CityGenerator();
 	private PregennedOpenSimplexNoise noise;
-	
+
 	public CityStructureManager(long seed)
 	{
 		super("city", 80, seed);
@@ -37,7 +37,7 @@ public class CityStructureManager extends StructureManager
 		BlockPos pos = new BlockPos(cx << 4, 40, cz << 4);
 		return makeStructure(cx, cz, new BigStructureCity(pos, cx, cz, generator, random));
 	}
-	
+
 	protected BigStructureCity makeStructure(int cx, int cz, BigStructureCity structure)
 	{
 		setSeed(cx, cz);
@@ -57,7 +57,7 @@ public class CityStructureManager extends StructureManager
 		}
 		return cave;
 	}
-	
+
 	protected void makeCave(int radius, int centerY, BigStructure structure)
 	{
 		int bounds = (int) (radius * 1.5);
@@ -85,11 +85,11 @@ public class CityStructureManager extends StructureManager
 					double nx = warp(x, y - minY, z + bounds);
 					double ny = warp(y2, x + bounds, z + bounds);
 					double nz = warp(z, x + bounds, y - minY);
- 					double xx = nx * nx;
+					double xx = nx * nx;
 					double yy = ny * ny;
 					double zz = nz * nz;
 					//double posRadius = radius - (Math.abs((noise.eval(x * 0.075, y * 0.075, z * 0.075) * 20)) + 10);
-					if (xx + yy + zz < rr) 
+					if (xx + yy + zz < rr)
 					{
 						if (wy > lavaH)
 							structure.setBlock(AIR, new BlockPos(x, wy, z));
@@ -100,7 +100,7 @@ public class CityStructureManager extends StructureManager
 			}
 		}
 	}
-	
+
 	protected void makeCave(int radius, int centerX, int centerY, int centerZ, BigStructure structure)
 	{
 		int bounds = (int) (radius * 1.5);
@@ -127,10 +127,10 @@ public class CityStructureManager extends StructureManager
 					double nx = warp(x, y - minY, z + bounds);
 					double ny = warp(y2, x + bounds, z + bounds);
 					double nz = warp(z, x + bounds, y - minY);
- 					double xx = nx * nx;
+					double xx = nx * nx;
 					double yy = ny * ny;
 					double zz = nz * nz;
-					if (xx + yy + zz < rr) 
+					if (xx + yy + zz < rr)
 					{
 						if (wy > lavaH)
 							structure.setBlock(AIR, new BlockPos(wx, wy, wz));
@@ -141,11 +141,11 @@ public class CityStructureManager extends StructureManager
 			}
 		}
 	}
-	
+
 	private double warp(double val, int nx, int ny) {
 		return val + (noise.eval(nx, ny) * 5);
 	}
-	
+
 	@Override
 	public void load(World world)
 	{

@@ -32,54 +32,42 @@ public class StructureNBT
 			.setChunk((ChunkPos) null)
 			.setReplacedBlock((Block) null)
 			.setIgnoreStructureBlock(false);
-	
-	public StructureNBT(String structure)
-	{
+
+	public StructureNBT(String structure) {
 		location = new ResourceLocation("betternether", structure);
 		template = readTemplate(new ResourceLocation("betternether", structure));
 	}
-	
-	protected StructureNBT(ResourceLocation location, Template template)
-	{
+
+	protected StructureNBT(ResourceLocation location, Template template) {
 		this.location = location;
 		this.template = template;
 	}
-	
-	public boolean generateCentered(World world, BlockPos pos, Random random)
-	{
+
+	public boolean generateCentered(World world, BlockPos pos, Random random) {
 		return generateCentered(world, pos, Rotation.values()[random.nextInt(Rotation.values().length)]);
 	}
-	
-	public boolean generateCentered(World world, BlockPos pos)
-	{
-		if(template == null)
-		{
+
+	public boolean generateCentered(World world, BlockPos pos) {
+		if (template == null) {
 			System.out.println("No structure: " + location.toString());
 			return false;
 		}
-		
+
 		BlockPos blockpos2 = template.getSize();
-		PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE)
-				.setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos) null)
-				.setReplacedBlock((Block) null).setIgnoreStructureBlock(false);
+		PlacementSettings placementsettings = DEFAULT_SETTINGS;
 		template.addBlocksToWorldChunk(world, pos.add(-blockpos2.getX() >> 1, 0, -blockpos2.getZ() >> 1), placementsettings);
 		return true;
 	}
-	
-	public boolean generateCentered(World world, BlockPos pos, Rotation rotation)
-	{
-		if(template == null)
-		{
+
+	public boolean generateCentered(World world, BlockPos pos, Rotation rotation) {
+		if (template == null) {
 			System.out.println("No structure: " + location.toString());
 			return false;
 		}
-		
-		BlockPos blockpos2 = template.getSize().rotate(rotation);
-		PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE)
-				.setRotation(rotation).setIgnoreEntities(false).setChunk((ChunkPos) null)
-				.setReplacedBlock((Block) null).setIgnoreStructureBlock(false);
-		pos = pos.add(-(blockpos2.getX() >> 1), 0, -(blockpos2.getZ() >> 1));
-		pos = pos.add(blockpos2.getX() < 0 ? -1 : 0, 0, blockpos2.getZ() < 0 ? -1 : 0);
+
+		BlockPos blockpos2 = getSize(rotation);
+		PlacementSettings placementsettings = DEFAULT_SETTINGS.setRotation(rotation);
+		pos = pos.add(-blockpos2.getX() >> 1, 0, -blockpos2.getZ() >> 1);
 		template.addBlocksToWorldChunk(world, pos, placementsettings);
 		return true;
 	}
@@ -127,17 +115,13 @@ public class StructureNBT
         
         return template;
     }
-	
-	public BlockPos getSize(Rotation rotation)
-	{
-		if (rotation == Rotation.NONE || rotation == Rotation.CLOCKWISE_180)
+
+
+	public BlockPos getSize(Rotation rotation) {
+		if (rotation == Rotation.NONE || rotation == Rotation.CLOCKWISE_180) {
 			return template.getSize();
-		else
-		{
-			BlockPos size = template.getSize();
-			int x = size.getX();
-			int z = size.getZ();
-			return new BlockPos(z, size.getY(), x);
+		} else {
+			return template.getSize().rotate(rotation);
 		}
 	}
 	

@@ -18,30 +18,30 @@ public class CityGenerator
 	private List<BlockPos> ends = new ArrayList<BlockPos>();
 	private List<BlockPos> add = new ArrayList<BlockPos>();
 	private List<BlockPos> rem = new ArrayList<BlockPos>();
-	
+
 	public CityGenerator()
 	{
 		for(String center : ConfigLoader.getCityCenters()) {
 			addBuildingToList(center, -10, centers);
 		}
-		
+
 		for(String building : ConfigLoader.getCityBuildings()) {
 			addBuildingToList(building, buildings);
 		}
-		
+
 		addBuildingToList("road_end_01", roadEnds);
 		addBuildingToList("road_end_02", -2, roadEnds);
-		
+
 		total.addAll(centers);
 		total.addAll(buildings);
 		total.addAll(roadEnds);
 	}
-	
+
 	private void addBuildingToList(String name, List<StructureCityBuilding> buildings)
 	{
 		addBuildingToList(name, 0, buildings);
 	}
-	
+
 	private void addBuildingToList(String name, int offsetY, List<StructureCityBuilding> buildings)
 	{
 		StructureCityBuilding building = new StructureCityBuilding("city/" + name, offsetY);
@@ -50,7 +50,7 @@ public class CityGenerator
 		buildings.add(building.getRotated(Rotation.CLOCKWISE_180));
 		buildings.add(building.getRotated(Rotation.COUNTERCLOCKWISE_90));
 	}
-	
+
 	private void placeCenterBuilding(BlockPos pos, StructureCityBuilding building, ArrayList<BuildingInfo> city)
 	{
 		BoundingBox bb = building.getBoundingBox().offset(pos);
@@ -59,7 +59,7 @@ public class CityGenerator
 		for (int i = 0; i < building.getEndsCount(); i++)
 			ends.add(pos.add(building.getOffsettedPos(i).add(0, building.getYOffset(), 0)));
 	}
-	
+
 	private void attachBuildings(Random random, ArrayList<BuildingInfo> city)
 	{
 		for (BlockPos pos : ends)
@@ -93,7 +93,7 @@ public class CityGenerator
 		rem.clear();
 		add.clear();
 	}
-	
+
 	private void closeRoads(ArrayList<BuildingInfo> city)
 	{
 		for (BlockPos pos : ends)
@@ -117,7 +117,7 @@ public class CityGenerator
 		rem.clear();
 		add.clear();
 	}
-	
+
 	public ArrayList<BuildingInfo> generate(BlockPos pos, Random random)
 	{
 		ArrayList<BuildingInfo> city = new ArrayList<BuildingInfo>();
@@ -127,7 +127,7 @@ public class CityGenerator
 		closeRoads(city);
 		return city;
 	}
-	
+
 	private boolean noCollisions(BoundingBox bb)
 	{
 		for (BoundingBox b : bounds)
@@ -135,7 +135,7 @@ public class CityGenerator
 				return false;
 		return true;
 	}
-	
+
 	public List<StructureCityBuilding> getBuildings()
 	{
 		return total;
